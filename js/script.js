@@ -67,12 +67,6 @@ const config = {
         ],
         builders: [
             {
-                inGameName: "agamertato",
-                rank: "Builder",
-                skinUrlOrPathToFile: "",
-                rankColor: "rgba(247, 2, 176, 0.5)"
-            },
-            {
                 inGameName: "strikun",
                 rank: "Builder",
                 skinUrlOrPathToFile: "",
