@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="icon" href="images/logo.png">
+  <meta name="description" content="The best Events.">
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/pages/apply.css">
+
+  <title>Blicni Events | Apply</title>
+  <style>
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!--Navbar-->
+  <div class="navbar">
+    <div class="menu-mobile">
+      <a href="index.html">
+        <div class="logo">
+          <img src="images/logo.png" alt="Server logo" class="logo-img">
+          <h3 class="server-name">Blicni Events</h3>
+        </div>
+      </a>
+
+      <div class="hamburger">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </div>
+
+    <div class="links">
+      <a href="index.html" class="link">Home</a>
+      <a href="admin-team.html" class="link">Admin-Team</a>
+      <a href="#" class="link active">Apply</a>
+    </div>
+  </div>
+
+  <!--Header-->
+  <section id="header">
+    <div class="content">
+      <div class="info">
+        <p class="minecraft-server-ip hidden">blincievents.enviromc.net</p>
+        <h1 class="title hidden">Apply <span>Now!</span></h1>        
+      </div>
+      <p class="description">
+        Do you think you can help us apply now!
+      </p>
+    </div>
+  </section>
+
+  <!--Contacts-->
+  <section id="contacts">
+    <div class="content">
+      <h2 class="section-title">Contact form</h2>
+
+      <div class="columns">
+        <form class="contact-form" id="contact-form">
+          <div class="row">
+            <label for="name">* In-game username </label>
+            <input type="text" required id="name" name="name">
+          </div>
+          <div class="row">
+            <label for="discord-name">* Discord username</label>
+            <input type="text" required id="discord-name" name="discord-name">
+          </div>
+          <div class="row">
+            <label for="email"> Email</label>
+            <input type="email" id="email" name="email">
+          </div>
+          <div class="row">
+            <label for="message">* Message</label>
+            <textarea required id="message" name="message"></textarea>
+          </div>
+          <div class="row">
+            <label for="position">* Position</label>
+            <select required id="position" name="position">
+              <option value="" disabled selected>Select your position</option>
+              <option value="builder">Builder</option>
+              <option value="developer">Developer</option>
+              <option value="staff">Staff</option>
+            </select>
+          </div>
+          <div class="form-footer">
+            <p class="alert">Fields marked with * are required</p>
+            <button type="submit">Send Message <i class="fa-solid fa-paper-plane"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!--Footer-->
+  <footer id="footer">
+    <p class="copyright">&copy; 2024 <span class="Blinci Events-footer">Blinci Events</span>. All rights reserved.</p>
+    <div class="social-links">
+        <a href="#" class="link tiktok-link"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="#" class="link instagram-link"><i class="fa-brands fa-square-instagram"></i></a>
+        <a href="#" class="link discord-link-footer"><i class="fa-brands fa-discord"></i></a>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script src="https://kit.fontawesome.com/cbf5ee59c8.js" crossorigin="anonymous"></script>
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent the default form submission
+
+      const name = document.getElementById('name').value;
+      const discordName = document.getElementById('discord-name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      const position = document.getElementById('position').value;
+
+      const webhookURL = 'https://discord.com/api/webhooks/1299630411009495061/vPKY5exWL0U4m5ShkDqxHEM23hyLZbkxHVlAf8B-pSJ0CA_yY2wgwbsZni2vmexJ-lQ9'; // Replace with your actual webhook URL
+
+      const payload = {
+        content: `New Application: <@&1052731555073773599> \n**In-game Username:** ${name}\n**Discord Username:** ${discordName}\n**Email:** ${email}\n**Message:** ${message}\n**Position:** ${position}`
+      };
+
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Your application has been sent!');
+          // Optionally reset the form
+          document.getElementById('contact-form').reset();
+        } else {
+          alert('There was an error sending your application.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error sending your application.');
+      });
+    });
+  </script>
+</body>
+</html>
