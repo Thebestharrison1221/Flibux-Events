@@ -35,6 +35,7 @@ const config = {
     atGroupsDefaultColors: {
         Owners: "rgba(255, 124, 124, 0.5)",
         developers: "rgba(230, 83, 0, 0.5)",
+        Designers: "rgba(0, 201, 84, 0.5)",
         builders: "rgba(247, 2, 176, 0.5)",
         staff: "rgba(11, 175, 255, 0.5)",
         discord: "rgba(10, 255, 96, 0.5",
@@ -42,22 +43,24 @@ const config = {
     adminTeamPage: {
         Owners: [
             {
-                inGameName: "Blinci",
+                inGameName: "IQ_Flinty",
                 rank: "Owner",
                 skinUrlOrPathToFile: "",
                 rankColor: "rgba(255, 3, 3, 1)"
             },
+        ],
+        developers: [
             {
                 inGameName: "thebestharrison",
-                rank: "Lead-Dev, Owner",
+                rank: "Lead-Dev",
                 skinUrlOrPathToFile: "",
                 rankColor: "rgba(255, 3, 3, 1)"
             }
         ],
-        developers: [
+        Designers: [
             {
-                inGameName: "stevelocks",
-                rank: "Developer",
+                inGameName: "Jennaaxolotl",
+                rank: "Designer",
                 skinUrlOrPathToFile: "",
                 rankColor: "rgba(230, 83, 0, 0.5)"
             },
