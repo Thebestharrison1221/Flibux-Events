@@ -822,3 +822,35 @@
     }
 }
 
+/*Image hover effect*/
+.image-container {
+    position: relative;
+}
+
+.hover-box {
+    position: absolute;
+    bottom: -10px; /* Adjusted to move the box slightly below the image */
+    left: 37%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px; /* Increased padding */
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease; /* Added height transition */
+    width: calc(100% + 70px); /* Increased width */
+    height: calc(100% + 50px); /* Added height */
+    text-align: center;
+    white-space: nowrap;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container:hover .hover-box {
+    opacity: 1;
+    width: calc(100% + 50px); /* Increased width */
+    height: calc(100% + 7px); /* Added height */
+}
