@@ -50,6 +50,7 @@
                 
                 <div class="buttons">
                     <a href="#about"><button class="how-to-join">Show more</button></a>
+                    <button class="copy-ip" onclick="copyIP()">Copy IP</button>
                 </div>
                 <p class="ip-copied" style="display: none;">IP was successfully copied!</p>
             </div>
@@ -190,6 +191,19 @@
                 console.error('Error fetching Discord user count:', error);
                 document.querySelector('.discord-online-users').textContent = 'Error';
             }
+        }
+
+        function copyIP() {
+            const ip = 'play.flibuxevents.com'; // Replace with your server IP
+            navigator.clipboard.writeText(ip).then(() => {
+                const ipCopied = document.querySelector('.ip-copied');
+                ipCopied.style.display = 'block';
+                setTimeout(() => {
+                    ipCopied.style.display = 'none';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy IP: ', err);
+            });
         }
 
         // Call both functions on page load

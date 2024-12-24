@@ -10,18 +10,9 @@
 
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/pages/apply.css">
+  <link rel="stylesheet" href="css/pages/event-application.css">
 
   <title>Flibux Events | Apply</title>
-  <style>
-    select {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-  </style>
 </head>
 <body>
   <!--Navbar-->
@@ -62,34 +53,36 @@
   <!--Contacts-->
   <section id="contacts">
     <div class="content">
-      <h2 class="section-title">Contact form</h2>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 class="section-title">Application form</h2>
+        <button class="event-application-btn" onclick="openOverlay()">Event Application</button>
+      </div>
 
       <div class="columns">
         <form class="contact-form" id="contact-form">
           <div class="row">
-            <label for="name">* In-game username </label>
-            <input type="text" required id="name" name="name">
+            <label for="name">Name *</label>
+            <input type="text" id="name" name="name" required>
           </div>
           <div class="row">
-            <label for="discord-name">* Discord username</label>
-            <input type="text" required id="discord-name" name="discord-name">
+            <label for="discord-name">Discord Username *</label>
+            <input type="text" id="discord-name" name="discord-name" required>
           </div>
           <div class="row">
-            <label for="email"> Email</label>
-            <input type="email" id="email" name="email">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
           </div>
           <div class="row">
-            <label for="message">* Message</label>
-            <textarea required id="message" name="message"></textarea>
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required></textarea>
           </div>
           <div class="row">
-            <label for="position">* Position</label>
-            <select required id="position" name="position">
-              <option value="" disabled selected>Select your position</option>
-              <option value="builder">Builder</option>
+            <label for="position">Position *</label>
+            <select id="position" name="position" required>
               <option value="developer">Developer</option>
-              <option value="staff">Staff</option>
-              <option value="event">Event</option>
+              <option value="builder">Builder</option>
+              <option value="event-moderator">Event Moderator</option>
+              <option value="designer">Designer</option>
             </select>
           </div>
           <div class="form-footer">
@@ -100,6 +93,41 @@
       </div>
     </div>
   </section>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay">
+    <div class="overlay-content">
+      <h2>Event Application</h2>
+      <form id="event-application-form">
+        <div class="row">
+          <label for="minecraft-username">Minecraft Username</label>
+          <input type="text" id="minecraft-username" name="minecraft-username" required>
+        </div>
+        <div class="row">
+          <label for="discord-username">Discord Username</label>
+          <input type="text" id="discord-username" name="discord-username" required>
+        </div>
+        <div class="row">
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" min="1" required>
+        </div>
+        <div class="row">
+          <label for="reason">Why should you get into the event?</label>
+          <textarea id="reason" name="reason" required></textarea>
+        </div>
+        <div class="row">
+          <label for="java-checkbox">Are you on Java?</label>
+          <input type="checkbox" id="java-checkbox" name="java-checkbox">
+        </div>
+        <div class="row">
+          <label for="both-days-checkbox">Can you show up both days?</label>
+          <input type="checkbox" id="both-days-checkbox" name="both-days-checkbox">
+        </div>
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+      <button class="close-btn" onclick="closeOverlay()">Close</button>
+    </div>
+  </div>
 
   <!--Footer-->
   <footer id="footer">
@@ -150,6 +178,53 @@
         alert('There was an error sending your application.');
       });
     });
+
+    document.getElementById('event-application-form').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent the default form submission
+
+      const minecraftUsername = document.getElementById('minecraft-username').value;
+      const discordUsername = document.getElementById('discord-username').value;
+      const age = document.getElementById('age').value;
+      const reason = document.getElementById('reason').value;
+      const isJava = document.getElementById('java-checkbox').checked;
+      const canShowUpBothDays = document.getElementById('both-days-checkbox').checked;
+
+      const webhookURL = 'https://discord.com/api/webhooks/1320414501501403196/qd-eAhxBHyDdjm4plKGwkrla0DHx1yApLoU-jZ5CPltHXzl7_DDFWCPhSXxiJGZNgZNr'; // Replace with your actual webhook URL
+
+      const payload = {
+        content: `New Event Application: <@&1287399494824230942> \n**Minecraft Username:** ${minecraftUsername}\n**Discord Username:** ${discordUsername}\n**Age:** ${age}\n**Reason:** ${reason}\n**On Java:** ${isJava ? 'Yes' : 'No'}\n**Can Show Up Both Days:** ${canShowUpBothDays ? 'Yes' : 'No'}`
+      };
+
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Your event application has been sent!');
+          // Optionally reset the form
+          document.getElementById('event-application-form').reset();
+          closeOverlay();
+        } else {
+          alert('There was an error sending your event application.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error sending your event application.');
+      });
+    });
+
+    function openOverlay() {
+      document.getElementById('overlay').style.display = 'flex';
+    }
+
+    function closeOverlay() {
+      document.getElementById('overlay').style.display = 'none';
+    }
   </script>
 </body>
 </html>
