@@ -43,6 +43,18 @@ const config = {
     adminTeamPage: {
         Owners: [
             {
+                inGameName: "MrBubbleFish",
+                rank: "Owner",
+                skinUrlOrPathToFile: "",
+                rankColor: "rgba(255, 3, 3, 1)"
+            },
+            {
+                inGameName: "Tuxyxx",
+                rank: "Owner",
+                skinUrlOrPathToFile: "",
+                rankColor: "rgba(255, 3, 3, 1)"
+            },
+            {
                 inGameName: "IQ_Flinty",
                 rank: "Owner",
                 skinUrlOrPathToFile: "",
@@ -59,13 +71,19 @@ const config = {
         ],
         Designers: [
             {
-                inGameName: "Jennaaxolotl",
+                inGameName: "AgamerTato",
                 rank: "Designer",
                 skinUrlOrPathToFile: "",
-                rankColor: "rgba(230, 83, 0, 0.5)"
-            },
+                rankColor: "rgba(255, 3, 3, 1)"
+            }
         ],
         builders: [
+            {
+                inGameName: "rainnnnnnnnnn",
+                rank: "Builder",
+                skinUrlOrPathToFile: "",
+                rankColor: "rgba(247, 2, 176, 0.5)"
+            },
             {
                 inGameName: "strikun",
                 rank: "Builder",
