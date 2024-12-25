@@ -36,7 +36,7 @@ const config = {
         Owners: "rgba(255, 124, 124, 0.5)",
         developers: "rgba(230, 83, 0, 0.5)",
         Designers: "rgba(0, 201, 84, 0.5)",
-        builders: "rgba(247, 2, 176, 0.5)",
+        builders: "rgba(247, 2, 178, 0.54)",
         staff: "rgba(11, 175, 255, 0.5)",
         discord: "rgba(10, 255, 96, 0.5",
     },
