@@ -1,0 +1,86 @@
+
+.admin-title {
+    text-align: center;
+    font-size: 3rem;
+    color: var(--main-color);
+    margin: 20px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.admin-dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.box {
+    background: var(--stats-background);
+    border: 2px solid var(--main-color);
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1 1 calc(33.333% - 40px);
+    box-shadow: rgba(0, 212, 255, 0.5) 0px 0px 10px -5px;
+}
+
+.box h2 {
+    color: var(--white-color);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.box p {
+    color: var(--description-color);
+    font-size: 1.25rem;
+}
+
+#webhook-form,
+#announcement-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#webhook-form textarea,
+#announcement-form textarea {
+    padding: 10px;
+    border: 2px solid var(--main-color);
+    border-radius: 4px;
+    resize: vertical;
+    min-height: 100px;
+    background: var(--background-color); /* Dark mode background */
+    color: var(--white-color); /* Dark mode text color */
+}
+
+#webhook-form button,
+#announcement-form button,
+#add-announcement-template {
+    background: var(--main-color);
+    color: var(--white-color);
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#webhook-form button:hover,
+#announcement-form button:hover,
+#add-announcement-template:hover {
+    background: rgba(57, 190, 255, 0.8);
+}
+
+#announcement-form select {
+    padding: 10px;
+    border: 2px solid var(--main-color);
+    border-radius: 4px;
+    background: var(--stats-background);
+    color: var(--white-color);
+    font-size: 1rem;
+}
+
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
