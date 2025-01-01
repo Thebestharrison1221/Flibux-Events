@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="icon" href="images/logo.png">
+    <meta name="description" content="The best Events. Its a fact">
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/pages/admin.css">
+
+    <title>Flibux Events | Admin</title>
+</head>
+<body>
+    <h1 class="admin-title">Welcome to the Admin Area</h1>
+
+    <div class="admin-dashboard">
+        <div class="box">
+            <h2>Send Message</h2>
+            <form id="webhook-form">
+                <textarea id="webhook-message" placeholder="Enter your message"></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        <div class="box">
+            <h2>Discord Announcements</h2>
+            <form id="announcement-form">
+                <select id="announcement-template">
+                    <option value="detailed-event">Detailed Event</option>
+                    <option value="community-update">Community Update</option>
+                    <option value="winner-announcement">Winner Announcement</option>
+                    <option value="countdown-event">Countdown to Event</option>
+                    <option value="weekly-reminder">Weekly Event Reminder</option>
+                    <option value="staff-recruitment">Staff Recruitment</option>
+                </select>
+                <textarea id="announcement-message" placeholder="Edit your announcement"></textarea>
+                <button type="submit">Send Announcement</button>
+            </form>
+        </div>
+        <div class="box box-large">
+            <h2>Generate Minecraft Skin</h2>
+            <form id="skin-form">
+                <input type="text" id="username" placeholder="Enter Minecraft Username" required>
+                <select id="skin-style">
+                    <option value="full">Full</option>
+                    <option value="bust">Bust</option>
+                    <option value="head">Head</option>
+                    <option value="face">Face</option>
+                    <option value="front">Front</option>
+                    <option value="frontfull">Front Full</option>
+                    <option value="skin">Skin</option>
+                </select>
+                <button type="submit">Generate</button>
+            </form>
+            <div id="skin-result" style="margin-top: 20px;">
+                <img id="skin-image" src="" alt="Minecraft Skin" style="display: none;">
+                <p id="skin-url" style="display: none;"></p>
+            </div>
+        </div>
+        <div class="box box-large">
+            <h2>Generate Discord Timestamp</h2>
+            <form id="timestamp-form">
+                <input type="datetime-local" id="timestamp" required>
+                <select id="timestamp-style">
+                    <option value="t">Short Time</option>
+                    <option value="T">Long Time</option>
+                    <option value="d">Short Date</option>
+                    <option value="D">Long Date</option>
+                    <option value="f">Short Date/Time</option>
+                    <option value="F">Long Date/Time</option>
+                    <option value="R">Relative Time</option>
+                </select>
+                <button type="submit">Generate</button>
+            </form>
+            <div id="timestamp-result" style="margin-top: 20px;">
+                <p id="timestamp-code" style="display: none;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        if (getCookie('loggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        // Helper to decode Base64
+        function decodeBase64(encodedString) {
+            return atob(encodedString);
+        }
+
+        // Replace raw webhook URLs with Base64-encoded strings
+        const webhookBase64 = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyMjQ5NzYxNTgzNjc0NTc4Mi9nM0RiRTB0MzZadWhVcTBxLUZibEpIb2ZpZDhmY2p5eGZVclVYUzAwSHhabzZZQVRsVlJiSFBId0o3cmQwUVRic2FkZA==';
+        const announcementWebhookBase64 = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyMjQ5NzYxNTgzNjc0NTc4Mi9nM0RiRTB0MzZadWhVcTBxLUZibEpIb2ZpZDhmY2p5eGZVclVYUzAwSHhabzZZQVRsVlJiSFBId0o3cmQwUVRic2FkZA==';
+
+        // Decode Base64 URLs
+        const webhookURL = decodeBase64(webhookBase64);
+        const announcementWebhookURL = decodeBase64(announcementWebhookBase64);
+
+        // Send message through Discord webhook
+        document.getElementById('webhook-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const message = document.getElementById('webhook-message').value;
+
+            const payload = {
+                content: message
+            };
+
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Message sent successfully!');
+                    document.getElementById('webhook-form').reset();
+                } else {
+                    alert('Failed to send message.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to send message.');
+            });
+        });
+
+        // Send announcement through Discord webhook
+        document.getElementById('announcement-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const message = document.getElementById('announcement-message').value;
+
+            const payload = {
+                content: message
+            };
+
+            fetch(announcementWebhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Announcement sent successfully!');
+                    document.getElementById('announcement-form').reset();
+                } else {
+                    alert('Failed to send announcement.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to send announcement.');
+            });
+        });
+
+        // Hardcoded announcement templates
+        const templates = {
+            'detailed-event': `🎉 **ATTENTION, CRAFTERS!** 🎉  
+🌟 **Event Name**: [Insert Event Name Here]  
+🗓️ **Date**: [Insert Date]  
+⏰ **Time**: [Insert Time + Time Zone]  
+📍 **Location**: [Server Name or IP]
+
+🔨 **What's Happening?**  
+[Brief description of the event. Example: "Join us for an epic build battle, a thrilling PvP tournament, or a scavenger hunt for rare items!"]
+
+🏆 **Prizes**:  
+- 1st Place: [Insert Prize]  
+- 2nd Place: [Insert Prize]  
+- Participation: [Insert Prize]
+
+💬 **How to Join?**  
+[Explain how users can sign up, e.g., "React with ✅ below or message a mod!"]
+
+🔥 Get ready to craft your way to victory! Don't miss out!`,
+            'community-update': `📰 **COMMUNITY UPDATE!** 📰  
+
+👋 Hello, [Minecraft Community Name]! Here's what's happening in our world:  
+
+🌟 **Upcoming Events**:  
+1️⃣ **[Event Name]**: [Date + Time]  
+2️⃣ **[Event Name]**: [Date + Time]  
+
+🎉 **Latest Highlights:**  
+- Our recent event **[Event Name]** was a blast! Check out the recap in #event-highlights.  
+- New features on the server: **[List any updates, e.g., new plugins, maps, or features]**  
+
+📌 **Mark your calendars and join the fun!**  
+React with 🌟 if you're excited for what’s ahead!`,
+            'winner-announcement': `🏆 **WINNER ANNOUNCEMENT!** 🏆  
+✨ What an incredible event we had today! Thank you to everyone who participated. 🌟  
+
+🎉 **Congratulations to our Winners:**  
+🥇 **1st Place**: [Winner Name] - [Prize]  
+🥈 **2nd Place**: [Winner Name] - [Prize]  
+🥉 **3rd Place**: [Winner Name] - [Prize]  
+
+🙌 Special shoutout to all the amazing participants: [Tag users or list their names]  
+
+💎 **Next Event:**  
+Stay tuned for details about our next adventure coming [Insert Date or Timeframe]!`,
+            'countdown-event': `⏳ **COUNTDOWN TO THE BIG EVENT!** ⏳  
+🎉 Get ready, [Minecraft community name]! The **[Event Name]** is just around the corner! 🎉  
+
+📅 **Event Date**: [Insert Date]  
+⏰ **Time**: [Insert Time + Time Zone]  
+🔗 **Join here**: [Server IP or link]
+
+🛠️ **Event Features**:  
+🌲 [Feature #1, e.g., custom maps]  
+⚔️ [Feature #2, e.g., team battles]  
+🎁 [Feature #3, e.g., epic giveaways]
+
+💡 **TIP:**  
+Don't forget to prepare your gear and practice your skills! It’s going to be legendary! 💪  
+🔥 **Who’s excited? React with 🔥 below if you're ready to join!`,
+            'weekly-reminder': `✨ **WEEKLY EVENT REMINDER!** ✨  
+
+🎮 **[Event Name]** is happening this week!  
+🗓️ **When?** [Day, Date]  
+⏰ **What Time?** [Time + Time Zone]  
+🔗 **Where?** [Server IP or Discord VC Link]  
+
+👾 **What to Expect:**  
+✔️ [Activity #1]  
+✔️ [Activity #2]  
+✔️ [Special Surprises!]
+
+💥 **RSVP Now!**  
+React below with 🎮 if you're joining!  
+Let's make it another week to remember. See you there, legends! 🌟`,
+            'staff-recruitment': `📢 WE NEED STAFF! JOIN THE TEAM!
+Hello, [Minecraft Community Name]! 🌟
+
+Our server is growing, and we’re on the lookout for passionate and talented individuals to join our Staff Team! 💼✨ If you’ve got the skills and the drive, this is your chance to make a big impact on our community.
+
+👾 Open Positions:
+🎨 Designer: Help us create stunning graphics, banners, and promotional content.
+🏗️ Builder: Craft amazing structures and maps for our server events.
+⚙️ Developer: Work on plugins, scripts, and custom features to enhance gameplay.
+🎮 Event Moderator: Host, organize, and manage epic events for our players.
+🛡️ Discord Moderator: Keep our Discord safe, fun, and engaging for everyone.
+
+💡 What We're Looking For:
+✔️ Passionate individuals who love Minecraft and community building.
+✔️ Team players with a positive and friendly attitude.
+✔️ [Role-specific requirements, e.g., "Basic knowledge of plugins for developers" or "Creative building style for builders."]
+
+📋 How to Apply:
+1️⃣ Fill out the application form: [Insert Link Here]
+2️⃣ DM a staff member if you have any questions!
+
+🔥 Why Join Us?
+
+Be part of a vibrant and supportive community!
+Gain experience and showcase your skills to a large audience.
+Help shape the future of [Server Name]!
+🌟 Applications close on [Insert Date]! Don’t miss your chance to make a difference.
+
+React with 🛠️ if you’re interested or have questions! Let’s build something amazing together. 💪`
+};
+
+document.getElementById('announcement-template').addEventListener('change', function() {
+    const selectedTemplate = this.value;
+    document.getElementById('announcement-message').value = templates[selectedTemplate];
+});
+
+// Generate Minecraft skin image
+document.getElementById('skin-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const style = document.getElementById('skin-style').value;
+    const skinUrl = `https://visage.surgeplay.com/${style}/512/${username}`;
+
+    document.getElementById('skin-image').src = skinUrl;
+    document.getElementById('skin-image').style.display = 'block';
+    document.getElementById('skin-url').textContent = skinUrl;
+    document.getElementById('skin-url').style.display = 'block';
+});
+
+// Generate Discord timestamp
+document.getElementById('timestamp-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const timestamp = new Date(document.getElementById('timestamp').value).getTime() / 1000;
+    const style = document.getElementById('timestamp-style').value;
+    const timestampCode = `<t:${timestamp}:${style}>`;
+
+    document.getElementById('timestamp-code').textContent = timestampCode;
+    document.getElementById('timestamp-code').style.display = 'block';
+});
+</script>
+</body>
+</html>

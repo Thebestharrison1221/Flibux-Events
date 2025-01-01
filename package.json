@@ -7,6 +7,15 @@
   },
   "license": "MIT",
   "devDependencies": {
+<<<<<<< HEAD
     "html-webpack-plugin": "^5.6.3"
+=======
+    "dotenv": "^16.4.7",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
+  },
+  "scripts": {
+    "build": "webpack --mode production"
+>>>>>>> 6e2c78f59e675453826600cd2566e2b0ff5d6342
   }
 }

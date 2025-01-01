@@ -15,27 +15,36 @@
   <title>Flibux Events | Apply</title>
 </head>
 <body>
-  <!--Navbar-->
-  <div class="navbar">
-    <div class="menu-mobile">
-      <a href="index.html">
-        <div class="logo">
-          <img src="images/logo.png" alt="Server logo" class="logo-img">
-          <h3 class="server-name">Flibux Events</h3>
+    <!--Navbar-->
+    <div class="navbar">
+        <div class="menu-mobile">
+            <a href="index.html">
+                <div class="logo">
+                    <img src="images/logo.png" alt="Server logo" class="logo-img">
+                    <h3 class="server-name">Flibux Events</h3>
+                </div>
+            </a>
+
+            <div class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
         </div>
-      </a>
 
-      <div class="hamburger">
-        <i class="fa-solid fa-bars"></i>
-      </div>
+        <div class="links">
+            <a href="index.html" class="link">
+                <i class="fa-solid fa-house"></i>
+                <span class="link-text">Home</span>
+            </a>
+            <a href="admin-team.html" class="link">
+                <i class="fa-solid fa-users"></i>
+                <span class="link-text">Admin-Team</span>
+            </a>
+            <a href="apply.html" class="link active">
+                <i class="fa-solid fa-file-signature"></i>
+                <span class="link-text">Apply</span>
+            </a>
+        </div>
     </div>
-
-    <div class="links">
-      <a href="index.html" class="link">Home</a>
-      <a href="admin-team.html" class="link">Admin-Team</a>
-      <a href="#" class="link active">Apply</a>
-    </div>
-  </div>
 
   <!--Header-->
   <section id="header">
@@ -75,6 +84,7 @@
               <option value="builder">Builder</option>
               <option value="designer">Designer</option>
               <option value="event-moderator">Event Moderator</option>
+              <option value="discord-moderator">Discord Moderator</option>
             </select>
           </div>
           <div class="row">
@@ -146,8 +156,17 @@
       const position = document.getElementById('position').value;
       const message = document.getElementById('message').value;
 
-      const webhookURL = 'https://discord.com/api/webhooks/1320414501501403196/qd-eAhxBHyDdjm4plKGwkrla0DHx1yApLoU-jZ5CPltHXzl7_DDFWCPhSXxiJGZNgZNr'; // Replace with your actual webhook URL
+        // Helper to decode Base64
+        function decodeBase64(encodedString) {
+            return atob(encodedString);
+        }
 
+        // Replace raw webhook URLs with Base64-encoded strings
+        const webhookBase64 = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyMDQxNDUwMTUwMTQwMzE5Ni9xZC1lQWh4Qkh5RGRqbTRwbEtHd2tybGEwREh4MXlBcExvVS1qWjVDUGx0SFh6bDdfRERGV0NQaFNYeGlKR1pOZ1pOcg==';
+
+        // Decode Base64 URLs
+        const webhookURL = decodeBase64(webhookBase64);
+        
       const payload = {
         content: `New Application: <@&1287399494824230942> \n**Minecraft Name:** ${name}\n**Discord Username:** ${discordName}\n**Position:** ${position}\n**Message:** ${message}`
       };
@@ -184,7 +203,16 @@
       const isJava = document.getElementById('java-checkbox').checked;
       const canShowUpBothDays = document.getElementById('both-days-checkbox').checked;
 
-      const webhookURL = 'https://discord.com/api/webhooks/1320414501501403196/qd-eAhxBHyDdjm4plKGwkrla0DHx1yApLoU-jZ5CPltHXzl7_DDFWCPhSXxiJGZNgZNr'; // Replace with your actual webhook URL
+        // Helper to decode Base64
+        function decodeBase64(encodedString) {
+            return atob(encodedString);
+        }
+
+        // Replace raw webhook URLs with Base64-encoded strings
+        const webhookBase64 = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyMDQxNDUwMTUwMTQwMzE5Ni9xZC1lQWh4Qkh5RGRqbTRwbEtHd2tybGEwREh4MXlBcExvVS1qWjVDUGx0SFh6bDdfRERGV0NQaFNYeGlKR1pOZ1pOcg==';
+
+        // Decode Base64 URLs
+        const webhookURL = decodeBase64(webhookBase64);
 
       const payload = {
         content: `New Event Application: <@&1287399494824230942> \n**Minecraft Username:** ${minecraftUsername}\n**Discord Username:** ${discordUsername}\n**Age:** ${age}\n**Reason:** ${reason}\n**On Java:** ${isJava ? 'Yes' : 'No'}\n**Can Show Up Both Days:** ${canShowUpBothDays ? 'Yes' : 'No'}`

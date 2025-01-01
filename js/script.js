@@ -49,12 +49,6 @@ const config = {
                 rankColor: "rgba(255, 3, 3, 1)"
             },
             {
-                inGameName: "Tuxyxx",
-                rank: "Owner",
-                skinUrlOrPathToFile: "",
-                rankColor: "rgba(255, 3, 3, 1)"
-            },
-            {
                 inGameName: "IQ_Flinty",
                 rank: "Owner",
                 skinUrlOrPathToFile: "",
