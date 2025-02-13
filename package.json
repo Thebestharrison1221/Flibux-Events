@@ -13,6 +13,5 @@
   },
   "scripts": {
     "build": "webpack --mode production"
->>>>>>> 6e2c78f59e675453826600cd2566e2b0ff5d6342
   }
 }
