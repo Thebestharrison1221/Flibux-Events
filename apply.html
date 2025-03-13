@@ -147,95 +147,110 @@
 
   <script src="js/script.js"></script>
   <script src="https://kit.fontawesome.com/cbf5ee59c8.js" crossorigin="anonymous"></script>
-  <script>
-    // XOR Encryption/Decryption function
-    function xorEncryptDecrypt(input, key) {
-        let output = '';
-        for (let i = 0; i < input.length; i++) {
-            output += String.fromCharCode(input.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-        }
-        return output;
+<script>
+  // XOR Encryption function
+  function xorEncryptDecrypt(input, key) {
+    let output = '';
+    for (let i = 0; i < input.length; i++) {
+      output += String.fromCharCode(input.charCodeAt(i) ^ key.charCodeAt(i % key.length));
     }
+    return output;
+  }
 
-    // Encoded Webhook (XOR-encoded)
-    const encodedWebhook = "ÓÅÐÔØÛÝÜÜÛÜÕØÝÖÙÓÝÛÒÖÙÔÓ";  // Replace this with your encoded webhook
-    const key = "supersecretkey";  // Secret XOR key used for encoding and decoding
+  // The secret key used for XOR encryption/decryption (make sure this is kept secure)
+  const xorKey = 'your-secret-key';  // Replace with your own key
 
-    // Decode the Webhook URL before using it
-    const webhookURL = xorEncryptDecrypt(encodedWebhook, key);
+  // Encrypted webhook URL (replace with your actual encrypted webhook URL)
+  const encryptedWebhookURL = '111b01025e494a4c160c074e04171d570c1a1f0212150a5d12114f030a16121c5a431e475c5b4257441a5c54484d5846401b45504c4027121426330e21583f20665e2e2f4b163c781b3c114b06233c4222503b0411377c5d48481f182f371e1f281b285c2d6c5f1f33542d403868181f1747122b0038533d0c'; // Replace with actual encrypted URL
 
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
+  // Decrypt the webhook URL using the XOR decryption
+  const webhookURL = xorEncryptDecrypt(encryptedWebhookURL, xorKey);
 
-        const name = document.getElementById('name').value;
-        const discordName = document.getElementById('discord-name').value;
-        const position = document.getElementById('position').value;
-        const message = document.getElementById('message').value;
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent the default form submission
 
-        const payload = {
-            content: `New Application: <@&1345168963738533929> \n**Minecraft Name:** ${name}\n**Discord Username:** ${discordName}\n**Position:** ${position}\n**Message:** ${message}`
-        };
+    // Get form values
+    const name = document.getElementById('name').value;
+    const discordName = document.getElementById('discord-name').value;
+    const position = document.getElementById('position').value;
+    const message = document.getElementById('message').value;
 
-        fetch(webhookURL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Your application has been sent!');
-                document.getElementById('contact-form').reset();
-            } else {
-                alert('There was an error sending your application.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was an error sending your application.');
-        });
+    // Create the payload with form data
+    const payload = {
+      content: `New Application: <@&1345168963738533929> \n**Minecraft Name:** ${name}\n**Discord Username:** ${discordName}\n**Position:** ${position}\n**Message:** ${message}`
+    };
+
+    // Send the payload to the Discord webhook
+    fetch(webhookURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('Your application has been sent!');
+        // Optionally reset the form
+        document.getElementById('contact-form').reset();
+      } else {
+        alert('There was an error sending your application.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('There was an error sending your application.');
     });
+  });
 
-    document.getElementById('event-application-form').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
+  document.getElementById('event-application-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent the default form submission
 
-        const minecraftUsername = document.getElementById('minecraft-username').value;
-        const discordUsername = document.getElementById('discord-username').value;
-        const age = document.getElementById('age').value;
-        const reason = document.getElementById('reason').value;
-        const isJava = document.getElementById('java-checkbox').checked;
-        const canShowUpBothDays = document.getElementById('both-days-checkbox').checked;
+    // Get form values
+    const minecraftUsername = document.getElementById('minecraft-username').value;
+    const discordUsername = document.getElementById('discord-username').value;
+    const age = document.getElementById('age').value;
+    const reason = document.getElementById('reason').value;
+    const isJava = document.getElementById('java-checkbox').checked;
+    const canShowUpBothDays = document.getElementById('both-days-checkbox').checked;
 
-        const payload = {
-            content: `New Event Application: \n**Minecraft Username:** ${minecraftUsername}\n**Discord Username:** ${discordUsername}\n**Age:** ${age}\n**Reason:** ${reason}\n**On Java:** ${isJava ? 'Yes' : 'No'}\n**Available Both Days:** ${canShowUpBothDays ? 'Yes' : 'No'}`
-        };
+    // Create the payload with event application data
+    const payload = {
+      content: `New Event Application: \n**Minecraft Username:** ${minecraftUsername}\n**Discord Username:** ${discordUsername}\n**Age:** ${age}\n**Reason:** ${reason}\n**Is Java:** ${isJava ? 'Yes' : 'No'}\n**Available both days:** ${canShowUpBothDays ? 'Yes' : 'No'}`
+    };
 
-        fetch(webhookURL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Your event application has been sent!');
-                document.getElementById('event-application-form').reset();
-                closeOverlay();
-            } else {
-                alert('There was an error sending your event application.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was an error sending your event application.');
-        });
+    // Send the payload to the Discord webhook
+    fetch(webhookURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('Your event application has been sent!');
+        // Optionally reset the form
+        document.getElementById('event-application-form').reset();
+        closeOverlay();
+      } else {
+        alert('There was an error sending your event application.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('There was an error sending your event application.');
     });
+  });
 
-    function openOverlay() {
-        document.getElementById('overlay').style.display = 'flex';
-    }
+  function openOverlay() {
+    document.getElementById('overlay').style.display = 'flex';
+  }
 
-    function closeOverlay() {
-        document.getElementById('overlay').style.display = 'none';
-    }
-  </script>
+  function closeOverlay() {
+    document.getElementById('overlay').style.display = 'none';
+  }
+</script>
+
 </body>
 </html>
